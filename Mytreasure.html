@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Treasure</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Joti+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Yuji+Boku&display=swap');
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f2f4;
+        }
+
+        .home-icon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+            z-index: 100;
+        }
+
+        .home-icon:hover {
+            border-bottom: 3px solid rgb(255, 0, 255);
+        }
+
+        /* Heading and sticker styling */
+        .treasure-heading {
+            position: relative;
+            text-align: center;
+            font-size: 2.5rem;
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            margin: 60px 0;
+			
+        }
+
+        .treasure-heading img {
+            position: absolute;
+            top: -46px; /* Adjusted to move the image down */
+            left: 43%;
+            transform: translateX(-50%);
+            width: 50px; /* Adjust the width of the image */
+            height: auto;
+        }
+
+        /* Separator line under the heading */
+        .separator-line {
+            border-top: 5px solid pink; /* Makes the line pink and wide */
+            margin: 20px 0;
+        }
+
+        .book-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            justify-items: center;
+        }
+
+        .book-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .book-item img {
+            width: 50%;
+            height: 50%;
+            object-fit: cover;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .book-item h2 {
+            font-size: 1.5rem;
+            color: #333;
+            margin: 15px 0;
+        }
+
+        .book-item p {
+            font-size: 1rem;
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .book-item .price {
+            font-size: 1.2rem;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+         .add-btn {
+            display: inline-block;
+            margin: 15px 0;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+			border:none;
+            transition: background-color 0.3s;
+        }
+
+        .add-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="/" class="home-icon"><i class="fas fa-home"></i></a>
+
+    <!-- Treasure Heading with Sticker -->
+    <div class="treasure-heading">
+        <img src="/images/totoro.png" alt="Totoro Sticker"> <!-- Image placed above "My" -->
+        My Treasures
+    </div>
+
+    <!-- Separator Line -->
+    <div class="separator-line"></div>
+
+    <!-- Book List Section -->
+    <div class="book-list">
+        <!-- Loop through books and display each one -->
+        <th:block th:each="book : ${books}">
+            <div class="book-item">
+                <!-- Display image -->
+                <img th:src="'data:image/jpeg;base64,' + ${book.encodedImage}" alt="Book Image">
+
+                <!-- Display book title -->
+                <h2 th:text="${book.name}">Book Title</h2>
+
+                <!-- Display author -->
+                <p th:text="'Author: ' + ${book.author}">Author: John Doe</p>
+
+                <!-- Display price -->
+                <p class="price" th:text="'$' + ${book.price}">Price</p>
+
+                <!-- Add to treasure button -->
+                <a th:if="${!book.treasure}" th:href="@{'/addToTreasure/' + ${book.id}}" class="add-btn">Add to My Treasure</a>
+
+                <!-- Edit button -->
+                <a th:href="@{'/edit/' + ${book.id}}" class="add-btn">Edit</a>
+				<!-- Remove from treasure -->
+				<a th:href="@{'/removeFromTreasure/' + ${book.id}}" class="add-btn">Remove Book</a>
+
+				<!-- Add to treasure -->
+			<a href="Add"><button class="add-btn"> Add Book </button>
+            </div>
+        </th:block>
+    </div>
+
+</body>
+
+</html>
