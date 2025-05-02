@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Great+Vibes&family=Poiret+One&display=swap" rel="stylesheet">
+	<script>
+	    function showFileName(input) {
+	        const fileName = input.files.length > 0 ? input.files[0].name : "No file chosen";
+	        document.getElementById("fileName").textContent = fileName;
+	    }
+	</script>
+
+    <style>
+        body {
+            font-family: 'Comfortaa', cursive;
+            background: linear-gradient(135deg, #ffe4ec, #fdf5e6, #e3f2fd);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .register-container {
+            background: white;
+            padding: 60px 50px;
+            border-radius: 24px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            width: 520px;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .register-container h2 {
+            text-align: center;
+            font-family: 'Great Vibes', cursive;
+            color: #ff69b4;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .register-container p {
+            text-align: center;
+            font-size: 16px;
+            color: #444;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 16px;
+            margin-bottom: 20px;
+            border: 2px solid #f8bbd0;
+            border-radius: 14px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #ff69b4;
+            box-shadow: 0 0 10px #ffc0cb;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #ff69b4, #ff85c1);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+            transform: scale(1.03);
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #ff1493;
+        }
+
+        .corner-text {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            font-size: 18px;
+            background: #ffe0f0;
+            padding: 12px 20px;
+            border-radius: 18px;
+            color: #d63384;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            font-family: 'Poiret One', cursive;
+        }
+
+        .anime-title {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 26px;
+            font-family: 'Great Vibes', cursive;
+            color: #ff69b4;
+            text-shadow: 1px 1px 3px #fff;
+        }
+
+        /* Success message styling */
+        .success-message {
+            color: #fff; /* White text */
+            background-color: #4CAF50; /* Green background */
+            font-size: 1.4em; /* Larger font size */
+            font-weight: bold;
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+		
+		.file-upload-wrapper {
+		    position: relative;
+		    width: 100%;
+		    margin-bottom: 20px;
+		}
+
+		.file-upload-label {
+		    display: inline-block;
+		    background: linear-gradient(135deg, #ff69b4, #ff85c1);
+		    color: white;
+		    padding: 14px 25px;
+		    font-size: 15px;
+		    font-weight: bold;
+		    border-radius: 14px;
+		    cursor: pointer;
+		    transition: background 0.3s ease, transform 0.2s ease;
+		    text-align: center;
+		}
+
+		.file-upload-label:hover {
+		    background: linear-gradient(135deg, #ff1493, #ff69b4);
+		    transform: scale(1.03);
+		}
+
+		.file-upload-wrapper input[type="file"] {
+		    display: none;
+		}
+
+		/* Optional: show selected file name */
+		.file-name {
+		    margin-top: 10px;
+		    font-size: 14px;
+		    color: #555;
+		    font-style: italic;
+		}
+		
+		.sticker-2 {
+			        width: 100px;
+			        height: 100px;
+			        transform: translate(500px,-230px);
+			      }
+
+    </style>
+</head>
+<body>
+    <div class="corner-text">Book Paradise</div>
+    <div class="anime-title">Add Your Book</div>
+	<img src="/images/teddy-bear.png" alt="niebor" class="sticker-2">
+    <div class="register-container">
+        <h2>Book-Register</h2>
+        <p>Register a book that will light up curious minds.</p>
+
+        <!-- Success Message with the correct class -->
+        <p th:if="${message}" class="success-message">
+            [[${message}]]
+        </p>
+		<form th:action="@{${book != null ? '/edit/' + book.id : '/register'}}" method="post" enctype="multipart/form-data" autocomplete="off">
+		    <!-- Book Info -->
+		    <input type="text" name="bookName" th:value="${book != null ? book.name : ''}" placeholder="Enter Book Name" required />
+		    <input type="text" name="author" th:value="${book != null ? book.author : ''}" placeholder="Enter Author Name" required />
+			<input type="text" name="price" th:value="${book != null ? book.price : ''}" placeholder="Enter Price" required style="width: 100%; padding: 16px; margin-bottom: 20px; border: 2px solid #f8bbd0; border-radius: 14px; font-size: 15px; transition: all 0.3s ease;" />
+
+		    <!-- Image Upload -->
+		    <div class="file-upload-wrapper">
+		        <label for="image" class="file-upload-label">Choose Book Image</label>
+		        <input type="file" id="image" name="image" accept="image/*" onchange="showFileName(this)">
+		        <div class="file-name" id="fileName" th:text="${book != null ? book.image : 'No file chosen'}"></div>
+		    </div>
+
+		    <button type="submit" th:text="${book == null ? 'Register' : 'Update'}"></button>
+		</form>
+
+
+        <a class="back-link" th:href="@{/}">← Back to Home</a>
+    </div>
+</body>
+</html>
