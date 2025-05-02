@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+		@import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Joti+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Yuji+Boku&display=swap');
+        body {
+            font-family:Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f2f4; /* Pale pink background */
+        }
+
+        .home-icon {
+            position: fixed; /* Fixed position so it's always visible */
+            top: 20px;
+            left: 20px;
+            font-size: 30px; /* Increase font size */
+            color: rgb(255, 255, 255); /* Dark color for visibility */
+            text-decoration: none;
+            z-index: 100; /* Ensure it's above other content */
+        }
+
+        .home-icon:hover {
+            
+			border-bottom: 3px solid white; 
+        }
+
+		.video-container {
+		    position: relative;
+		    width: 100%;
+		    height: 400px; /* Set a fixed height if needed */
+		    overflow: hidden;
+		}
+
+		.video-container video {
+		    width: 100%;
+		    height: auto;
+			top:-230px;
+		    position: relative;
+		    clip-path: inset(40px 0 20px 0); /* Crop 20px top, 50px bottom */
+		    object-fit: cover;
+		    display: block;
+			bottom:-100px;
+		}
+
+
+        .video-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+			font-family:"Joti One", serif;
+            padding: 10px 20px;
+        }
+
+        /* Book container */
+        .book-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            justify-items: center;
+        }
+
+        .book-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 320px;
+        }
+		.book-item img {
+		    width: 50%;
+		    height: 50%; /* Ensures the image fills the container */
+		    object-fit: cover; /* This ensures the image covers the full area without distorting */
+		    border-bottom: 1px solid #ddd;
+		}
+
+
+        .book-item h2 {
+            font-size: 1.5rem;
+            color: #333;
+            margin: 15px 0;
+        }
+
+        .book-item p {
+            font-size: 1rem;
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .book-item .price {
+            font-size: 1.2rem;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        /* Add to treasure button */
+        .book-item .add-btn {
+            display: inline-block;
+            margin: 15px 0;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .book-item .add-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+
+<body>
+	<audio src="audio/sakura.mp3" autoplay loop></audio>
+    <!-- Home Icon -->
+   <a href="/" class="home-icon"><i class="fas fa-home"></i></a>
+
+    <!-- Video and Text Section -->
+    <div class="video-container">
+        <video autoplay muted loop>
+            <source src="video/main.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="video-text">
+            Magic ink, ancient lore—step into the story.
+        </div>
+    </div>
+
+    <!-- Book List Section -->
+    <div class="book-list">
+        <!-- Loop through books and display each one -->
+        <th:block th:each="book : ${books}">
+            <div class="book-item">
+                <!-- Display image -->
+                <img th:src="'data:image/jpeg;base64,' + ${book.encodedImage}" alt="Book Image">
+
+                <!-- Display book title -->
+                <h2 th:text="${book.name}">Book Title</h2>
+
+                <!-- Display author -->
+                <p th:text="'Author: ' + ${book.author}">Author: John Doe</p>
+
+                <!-- Display price -->
+                <p class="price" th:text="'$' + ${book.price}">Price</p>
+
+                <!-- Add to treasure button -->
+				<a th:href="@{'/addToTreasure/' + ${book.id}}" class="add-btn">Add to My Treasure</a>
+            </div>
+        </th:block>
+    </div>
+
+</body>
+
+</html>
